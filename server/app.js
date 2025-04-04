@@ -21,6 +21,28 @@ app.post("/signup", async (req, res) => {
     res.send("user added")
 })
 
+app.get("/user", async (req, res) =>{
+    const userEmail = req.body.email;
+    try {
+       const user =  await User.find({emailId : userEmail})
+       if(user.length() === 0) res.send(400)
+       else res.send(user)
+    } catch (error) {
+        res.send(400).send("Not working")
+    }
+    
+})
+
+app.patch("/user", async(req, res)=>{
+    const userId = req.body.userId;
+    const data = req.body;
+    try {
+        await User.findByIdAndUpdate({_id: userId} ,data);
+        res.send("User Changed")
+    } catch (error) {
+        res.send(400);
+    }    
+})  
 
 connectDb.then(() => {
     console.log("Db connection sucess");
