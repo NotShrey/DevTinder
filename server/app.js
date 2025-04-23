@@ -33,6 +33,19 @@ app.get("/user", async (req, res) =>{
     
 })
 
+app.post("/signup", async(req,res) =>{
+    //validation
+    try{
+
+        validateSignUpdata(req);
+
+        const passWordhash = bcrypt.hash(passWord,10);
+    }
+    catch(err){
+        res.send(400);
+    }
+})
+
 app.patch("/user", async(req, res)=>{
     const userId = req.body.userId;
     const data = req.body;
